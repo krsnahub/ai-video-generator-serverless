@@ -4,23 +4,43 @@ import time
 import os
 import subprocess
 import uuid
+import base64
 
 # Get RunPod API key (already set in your env/Secrets)
 RUNPOD_API_KEY = os.getenv("RUNPOD_API_KEY")
 
 # -----------------------
-# Utility: download file
+# Utility: download file OR handle data URL
 # -----------------------
-def download_file(url, dest_path):
-    print(f"📥 Downloading: {url}")
-    r = requests.get(url, stream=True, timeout=30)
-    if r.status_code == 200:
-        with open(dest_path, "wb") as f:
-            for chunk in r.iter_content(1024):
-                f.write(chunk)
-        print(f"✅ Downloaded to: {dest_path}")
+def download_or_save_image(image_url, dest_path):
+    print(f"📥 Processing image: {image_url[:50]}...")
+    
+    if image_url.startswith('data:'):
+        # Handle data URL
+        print("🔄 Processing data URL...")
+        try:
+            # Extract the base64 data
+            header, data = image_url.split(',', 1)
+            image_data = base64.b64decode(data)
+            
+            with open(dest_path, 'wb') as f:
+                f.write(image_data)
+            
+            print(f"✅ Data URL saved to: {dest_path}")
+            return
+        except Exception as e:
+            raise Exception(f"Failed to process data URL: {str(e)}")
     else:
-        raise Exception(f"Failed to download file: {url} (Status: {r.status_code})")
+        # Handle regular URL
+        print(f"📥 Downloading from URL: {image_url}")
+        r = requests.get(image_url, stream=True, timeout=30)
+        if r.status_code == 200:
+            with open(dest_path, "wb") as f:
+                for chunk in r.iter_content(1024):
+                    f.write(chunk)
+            print(f"✅ Downloaded to: {dest_path}")
+        else:
+            raise Exception(f"Failed to download file: {image_url} (Status: {r.status_code})")
 
 # -----------------------
 # Utility: upload to RunPod storage
@@ -67,7 +87,7 @@ def create_test_video(input_path, output_path, prompt, fps, num_frames):
     
     try:
         # Create a simple test video using ffmpeg (if available)
-        # This creates a 3-second video with the input image
+        # This creates a video with the input image
         duration = max(1, num_frames / fps)  # At least 1 second
         
         cmd = [
@@ -114,7 +134,7 @@ def handler(event):
         num_frames = int(inputs.get("num_frames", 40))
 
         print(f"🎬 Processing video generation:")
-        print(f"   Image URL: {image_url}")
+        print(f"   Image URL type: {'data URL' if image_url.startswith('data:') else 'regular URL'}")
         print(f"   Prompt: {prompt}")
         print(f"   FPS: {fps}, Frames: {num_frames}")
 
@@ -125,8 +145,8 @@ def handler(event):
         input_path = "/tmp/input.png"
         output_path = f"/tmp/output_{uuid.uuid4().hex[:8]}.mp4"
 
-        # 1. Download image
-        download_file(image_url, input_path)
+        # 1. Download or save image (handles both URLs and data URLs)
+        download_or_save_image(image_url, input_path)
 
         # 2. Create video (placeholder for WAN model)
         video_created = create_test_video(input_path, output_path, prompt, fps, num_frames)
