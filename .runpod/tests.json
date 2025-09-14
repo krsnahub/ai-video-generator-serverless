@@ -1,0 +1,54 @@
+{
+  "tests": [
+    {
+      "name": "wan22_t2v_test",
+      "input": {
+        "model_type": "wan22_t2v",
+        "prompt": "A cinematic shot of a mountain lake at sunset",
+        "steps": 10,
+        "cfg": 7.5,
+        "fps": 12,
+        "duration": 3
+      },
+      "timeout": 120000
+    },
+    {
+      "name": "wan22_i2v_test",
+      "input": {
+        "model_type": "wan22_i2v",
+        "prompt": "A cat dancing on a rooftop",
+        "image_data": "data:image/png;base64,FAKE==",
+        "steps": 10,
+        "cfg": 7.5,
+        "fps": 12,
+        "duration": 3
+      },
+      "timeout": 120000
+    },
+    {
+      "name": "wan21_t2v_test",
+      "input": {
+        "model_type": "wan21_t2v",
+        "prompt": "A futuristic city skyline",
+        "steps": 10,
+        "cfg": 7.5,
+        "fps": 12,
+        "duration": 3
+      },
+      "timeout": 120000
+    },
+    {
+      "name": "wan21_i2v_test",
+      "input": {
+        "model_type": "wan21_i2v",
+        "prompt": "A car driving down a neon street",
+        "image_data": "data:image/png;base64,FAKE==",
+        "steps": 10,
+        "cfg": 7.5,
+        "fps": 12,
+        "duration": 3
+      },
+      "timeout": 120000
+    }
+  ]
+}
