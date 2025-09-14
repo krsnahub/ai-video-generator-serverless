@@ -13,7 +13,6 @@ from workflows import (
 
 COMFYUI_URL = "http://127.0.0.1:8188"
 
-
 def build_workflow(inp):
     model_type = inp.get("model_type", "wan22_t2v")
     prompt = inp.get("prompt", "")
@@ -91,16 +90,11 @@ def build_workflow(inp):
     else:
         raise ValueError(f"Unknown model_type {model_type}")
 
-
 def handler(job):
     try:
         inp = job["input"]
         workflow = build_workflow(inp)
-
-        res = requests.post(
-            f"{COMFYUI_URL}/prompt", json={"prompt": workflow}
-        ).json()
-
+        res = requests.post(f"{COMFYUI_URL}/prompt", json={"prompt": workflow}).json()
         return {
             "success": True,
             "model_type": inp.get("model_type"),
@@ -109,10 +103,5 @@ def handler(job):
         }
     except Exception as e:
         return {"error": str(e)}
-
-
-def handler(job):
-    inp = job["input"]
-    return {"echo": inp}
 
 runpod.serverless.start({"handler": handler})
