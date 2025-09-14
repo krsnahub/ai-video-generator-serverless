@@ -4,7 +4,11 @@
       "name": "wan22_t2v_test",
       "input": {
         "model_type": "wan22_t2v",
-        "prompt": "A cinematic shot of a mountain lake"
+        "prompt": "A cinematic shot of a mountain lake",
+        "steps": 10,
+        "cfg": 7.5,
+        "fps": 12,
+        "duration": 3
       },
       "timeout": 120000
     }
