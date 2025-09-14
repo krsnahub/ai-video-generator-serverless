@@ -1,0 +1,11 @@
+{
+  "title": "Wan Serverless Wrapper",
+  "description": "Serverless API for Wan 2.2 / 2.1 via ComfyUI",
+  "type": "serverless",
+  "category": "video",
+  "icon": "https://raw.githubusercontent.com/runpod/worker-comfyui/main/icon.png",
+  "config": {
+    "gpu": true,
+    "containerDiskGB": 40
+  }
+}

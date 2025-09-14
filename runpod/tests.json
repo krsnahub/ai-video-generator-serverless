@@ -1,0 +1,12 @@
+{
+  "tests": [
+    {
+      "name": "wan22_t2v_test",
+      "input": {
+        "model_type": "wan22_t2v",
+        "prompt": "A cinematic shot of a mountain lake"
+      },
+      "timeout": 120000
+    }
+  ]
+}
