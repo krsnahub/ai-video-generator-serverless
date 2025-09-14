@@ -1,5 +1,21 @@
-runpod==1.5.0
-requests==2.31.0
-Pillow==10.0.1
-numpy==1.24.3
-opencv-python==4.8.1.78
+# AI Video Generator - Serverless Requirements
+runpod>=1.5.1
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+transformers>=4.30.0
+diffusers>=0.25.0
+accelerate>=0.20.0
+xformers>=0.0.20
+pillow>=9.5.0
+opencv-python>=4.8.0
+imageio[ffmpeg]>=2.31.0
+av>=10.0.0
+numpy>=1.24.0
+requests>=2.31.0
+safetensors>=0.3.0
+huggingface-hub>=0.16.0
+compel>=2.0.0
+omegaconf>=2.3.0
+einops>=0.7.0
+scipy>=1.11.0
