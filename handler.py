@@ -111,4 +111,8 @@ def handler(job):
         return {"error": str(e)}
 
 
+def handler(job):
+    inp = job["input"]
+    return {"echo": inp}
+
 runpod.serverless.start({"handler": handler})
